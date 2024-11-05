@@ -4,6 +4,10 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
+/**
+ * Cache & Memoization
+ */
+
 async function getFeaturedProducts(): Promise<Product[]> {
   const response = await api('/products/featured', {
     next: {
@@ -12,6 +16,7 @@ async function getFeaturedProducts(): Promise<Product[]> {
   })
 
   const products = await response.json()
+
   return products
 }
 
@@ -23,10 +28,10 @@ export default async function Home() {
   const [highlightedProduct, ...otherProducts] = await getFeaturedProducts()
 
   return (
-    <div className="grid max-h-[920px] grid-cols-9 grid-rows-6 gap-6">
+    <div className="grid max-h-[860px] grid-cols-9 grid-rows-6 gap-6">
       <Link
         href={`/product/${highlightedProduct.slug}`}
-        className="group relative col-span-6 row-span-6 rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-start"
+        className="group relative col-span-6 row-span-6 rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-end"
       >
         <Image
           src={highlightedProduct.image}
@@ -55,7 +60,7 @@ export default async function Home() {
           <Link
             key={product.id}
             href={`/product/${product.slug}`}
-            className="group relative col-span-3 row-span-3 rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-start"
+            className="group relative col-span-3 row-span-3 rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-end"
           >
             <Image
               src={product.image}
